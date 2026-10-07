@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-/** Outcome notification; inventory callers commit the result after this event. */
 public final class EnchantApplyResultEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;

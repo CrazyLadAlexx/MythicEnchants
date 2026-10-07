@@ -42,11 +42,9 @@ public final class MythicEnchantsCommand implements TabExecutor {
                     int destination = -1;
                     for (int slot = 0; slot < contents.length; slot++) {
                         var item = contents[slot];
-                        if (item == null || item.getType().isAir() || (item.isSimilar(book) && item.getAmount() < item.getMaxStackSize())) { destination = slot; break; }
+                        if (item == null || item.getType().isAir()) { destination = slot; break; }
                     }
                     if (destination < 0) throw new IllegalArgumentException("Player inventory is full; no book was given.");
-                    var existing = contents[destination];
-                    if (existing != null && existing.isSimilar(book)) book.setAmount(existing.getAmount() + 1);
                     player.getInventory().setItem(destination, book);
                     sender.sendMessage(Text.colour("&aGave an enchant book to " + player.getName() + "."));
                 }

@@ -37,7 +37,6 @@ public final class ApplicationService {
             if (gear.read(target).getOrDefault(data.enchantId(), 0) >= data.level()) {
                 return invalid("Gear already has this enchant at an equal or higher level.", bookStack, target);
             }
-            // Validate all metadata and prepare the success snapshot before any destructive roll.
             applied = gear.apply(target, data.enchantId(), data.level());
         } catch (IllegalArgumentException e) { return invalid(e.getMessage(), bookStack, target); }
         var pre = new EnchantPreApplyEvent(player, data, target);

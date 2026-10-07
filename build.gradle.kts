@@ -2,8 +2,8 @@ plugins { java }
 
 group = "me.alex"
 version = file("version.txt").readText().trim().removePrefix("v")
-require(Regex("(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)").matches(version.toString())) {
-    "version.txt must contain major.minor.patch (optional leading v)"
+require(Regex("[0-9]+\\.[0-9]+(?:\\.[0-9]+)?").matches(version.toString())) {
+    "version.txt must contain major.minor or major.minor.patch (optional leading v)"
 }
 
 repositories {

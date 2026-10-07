@@ -6,7 +6,7 @@ A Paper **26.3** enchant framework running on **Java 25**. Version 1 includes bo
 
 ## Install and build
 
-Copy `build/libs/MythicEnchants-1.0.0.jar` into your Paper server's `plugins` directory and restart. The plugin creates `plugins/MythicEnchants/config.yml` and `enchants.yml` on first startup.
+Copy `build/libs/MythicEnchants-1.01.jar` into your Paper server's `plugins` directory and restart. The plugin creates `plugins/MythicEnchants/config.yml` and `enchants.yml` on first startup.
 
 Build with the included Gradle 9.4.0 wrapper and Java 25 installed:
 
@@ -36,9 +36,9 @@ Example:
 
 ## Books and applying enchants
 
-Books use normal `BOOK` items, with a tier-coloured name, a Roman numeral level, green success chance, red destroy chance, yellow description lines, a blank separator, and the two requested grey hint lines. Book names, book lore, and applied enchant lore have italics explicitly disabled, including embedded `&o` formatting.
+Books use `BOOK` items with a maximum stack size of one, a tier-coloured name, a Roman numeral level, green success chance, red destroy chance, yellow description lines, a blank separator, and the two requested grey hint lines. Book names, book lore, and applied enchant lore have italics explicitly disabled, including embedded `&o` formatting.
 
-Pick up a book on your cursor and **left-click** a compatible single piece of gear in your own inventory, including equipped armour. Each valid attempt consumes **one** book from the cursor stack:
+Move books normally between empty or occupied inventory and chest slots. Pick up a book on your cursor and **left-click** a compatible single piece of gear in your own inventory, including equipped armour, to apply it. Each valid attempt consumes **one** book:
 
 - Success applies the enchant or upgrades an existing lower level. No destruction roll occurs on success.
 - Failure triggers a separate destroy roll. If it passes, the target gear is destroyed; otherwise the gear survives unchanged.
@@ -103,7 +103,6 @@ import me.alex.mythicenchants.enchant.EnchantTier;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
-// Inside your JavaPlugin.onEnable():
 MythicEnchantsAPI api = getServer().getServicesManager().load(MythicEnchantsAPI.class);
 if (api == null) throw new IllegalStateException("MythicEnchants API unavailable");
 NamespacedKey id = new NamespacedKey(this, "lifesteal");
@@ -114,10 +113,8 @@ api.register(this, new EnchantDefinition(
 ));
 var book = api.createBook(id, 2, 75, 25);
 
-// In your gameplay listener:
 int level = api.appliedEnchants(player.getInventory().getItemInMainHand())
     .getOrDefault(id, 0);
-// Use level to implement your gameplay effect.
 ```
 
 `register(owner, definition)` rejects duplicate IDs and disabled owners. `unregister(owner, id)` removes only that owner's API definition. Disabling an extension removes its registrations automatically. Config definitions cannot be unregistered through this method.
@@ -129,7 +126,6 @@ int level = api.appliedEnchants(player.getInventory().getItemInMainHand())
 ```java
 var result = api.attemptApplication(player, cursorBooks, targetGear);
 if (result.consumedBook()) {
-    // Commit both snapshots to the cursor and target slot in your inventory code.
     player.setItemOnCursor(result.remainingBooks());
     player.getInventory().setItem(targetSlot, result.resultingGear());
 }
@@ -139,13 +135,13 @@ Valid attempts fire cancellable `EnchantPreApplyEvent` before randomness or cons
 
 ## GitHub update notices
 
-`version.txt` at the repository root is the build's single version source, initially `1.0.0`. The updater checks this public URL asynchronously at startup and every six hours:
+`version.txt` at the repository root is the build's single version source, currently `1.01`. The updater checks this public URL asynchronously at startup and every six hours:
 
 ```text
 https://raw.githubusercontent.com/CrazyLadAlexx/MythicEnchants/main/version.txt
 ```
 
-Publish a new JAR, increase `version.txt` to a numerically greater `major.minor.patch`, and push it to `main`. An optional leading `v` is accepted. Code pushes without a version increase do not produce update notices. This project does not upload to GitHub automatically.
+Publish a new JAR, increase `version.txt`, and push it to `main`. Versions accept `major.minor` or `major.minor.patch` with an optional leading `v`. Components compare numerically, with a missing patch treated as zero: `1.01` is greater than `1.0.0`, and `1.02` is greater than `1.01`. Notifications preserve the published spelling. Code pushes without a version increase do not produce update notices.
 
 Online OPs receive a new version notice, and joining OPs receive the cached notice once per session per available version:
 

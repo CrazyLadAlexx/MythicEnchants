@@ -26,6 +26,7 @@ public final class BookService {
         if (value > definition.maxLevel()) throw new IllegalArgumentException("Level exceeds maximum of " + definition.maxLevel());
         ItemStack item = new ItemStack(Material.BOOK);
         var meta = item.getItemMeta();
+        meta.setMaxStackSize(1);
         meta.displayName(Text.colour(BookText.NAME.format(settings.get().colour(definition.tier()), definition.displayName(), RomanNumerals.format(value))));
         var lore = new ArrayList<Component>();
         lore.add(Text.colour(BookText.SUCCESS.format(successChance)));

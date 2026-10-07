@@ -25,15 +25,18 @@ public final class BookApplyListener implements Listener {
             || event.getClickedInventory() != player.getInventory() || !books.isMarked(event.getCursor())) return;
         ItemStack beforeBooks = event.getCursor().clone();
         ItemStack beforeGear = event.getCurrentItem() == null ? null : event.getCurrentItem().clone();
+        if (beforeGear == null || beforeGear.getAmount() != 1) return;
+        var data = books.inspect(beforeBooks);
+        if (data.isEmpty()) return;
+        var definition = api.definition(data.get().enchantId());
+        if (definition.isEmpty() || !definition.get().materials().contains(beforeGear.getType())) return;
         event.setCancelled(true);
         int slot = event.getSlot();
         var top = event.getView().getTopInventory();
-        // Bukkit recommends scheduling inventory changes after the click transaction.
         plugin.getServer().getScheduler().runTask(plugin, () -> {
             if (!player.isOnline() || !player.getOpenInventory().getTopInventory().equals(top)
                 || !same(player.getItemOnCursor(), beforeBooks) || !same(player.getInventory().getItem(slot), beforeGear)) return;
             var result = api.attemptApplication(player, beforeBooks, beforeGear);
-            // Event subscribers can change inventories; never overwrite their changes.
             if (!player.isOnline() || !player.getOpenInventory().getTopInventory().equals(top)
                 || !same(player.getItemOnCursor(), beforeBooks) || !same(player.getInventory().getItem(slot), beforeGear)) return;
             if (result.consumedBook()) {

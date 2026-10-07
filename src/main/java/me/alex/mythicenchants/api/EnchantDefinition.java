@@ -7,7 +7,6 @@ import me.alex.mythicenchants.enchant.EnchantTier;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
-/** Immutable definition. Registration does not install a gameplay effect. */
 public record EnchantDefinition(NamespacedKey id, String displayName, EnchantTier tier,
                                int maxLevel, List<String> description, Set<Material> materials) {
     public EnchantDefinition {

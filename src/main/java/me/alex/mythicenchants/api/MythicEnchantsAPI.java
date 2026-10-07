@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-/** Server-thread API. Item operations return snapshots and do not mutate supplied items. */
 public interface MythicEnchantsAPI {
     void register(Plugin owner, EnchantDefinition definition);
     boolean unregister(Plugin owner, NamespacedKey id);

@@ -19,7 +19,6 @@ public final class ConfigurationManager {
     }
     private YamlConfiguration read(String name) throws IOException, InvalidConfigurationException {
         YamlConfiguration yaml = new YamlConfiguration();
-        // Namespaced IDs may contain dots and slashes; treat them as literal YAML keys.
         if (name.equals("enchants.yml")) yaml.options().pathSeparator('\0');
         yaml.load(new File(plugin.getDataFolder(), name));
         return yaml;

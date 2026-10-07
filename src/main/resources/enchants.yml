@@ -1,4 +1,3 @@
-# Definitions provide books and applied item metadata, not gameplay effects.
 enchants:
   'mythicenchants:example':
     enabled: true

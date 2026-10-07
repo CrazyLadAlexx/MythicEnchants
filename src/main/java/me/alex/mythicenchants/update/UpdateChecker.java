@@ -75,7 +75,7 @@ public final class UpdateChecker implements Listener {
                 available = checked.compareTo(installed) > 0 ? checked : null;
                 plugin.getServer().getOnlinePlayers().forEach(this::notifyPlayer);
             });
-        } catch (org.bukkit.plugin.IllegalPluginAccessException ignored) { /* Plugin disabled while fetching. */ }
+        } catch (org.bukkit.plugin.IllegalPluginAccessException ignored) {}
     }
     private void notifyPlayer(Player player) {
         if (checkedVersion == null || !player.isOp()) return;

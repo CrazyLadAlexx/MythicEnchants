@@ -50,7 +50,6 @@ public final class GearService {
             List<Component> previous;
             try { previous = old.lines().map(line -> GsonComponentSerializer.gson().deserialize(line)).toList(); }
             catch (RuntimeException e) { throw new IllegalArgumentException("Malformed managed enchant lore", e); }
-            // Remove only the exact block we previously appended, preserving unrelated lore.
             for (int offset = lore.size() - previous.size(); offset >= 0; offset--) {
                 if (lore.subList(offset, offset + previous.size()).equals(previous)) {
                     lore.subList(offset, offset + previous.size()).clear(); break;

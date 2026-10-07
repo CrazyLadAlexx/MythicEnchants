@@ -7,7 +7,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-/** Read-only snapshots of a valid attempt, fired before randomness and consumption. */
 public final class EnchantPreApplyEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;

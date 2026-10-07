@@ -3,7 +3,6 @@ package me.alex.mythicenchants.application;
 import java.util.function.IntSupplier;
 import me.alex.mythicenchants.api.ApplicationResult.Status;
 
-/** Rolls are independent integers in 1..100; destruction is conditional on failure. */
 public final class ChanceRoller {
     private final IntSupplier roll;
     public ChanceRoller(IntSupplier roll) { this.roll = roll; }
