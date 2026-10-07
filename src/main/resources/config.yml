@@ -1,0 +1,15 @@
+# Legacy & colour codes. Names and lore are always non-italic.
+tiers:
+  SIMPLE: '&f'
+  UNCOMMON: '&a'
+  ELITE: '&9'
+  ULTIMATE: '&e'
+  LEGENDARY: '&6'
+  GODLY: '&c'
+  MYTHIC: '&d'
+updates:
+  enabled: true
+  interval-hours: 6
+  # Public raw version file; its contents must be major.minor.patch (optional v).
+  version-url: https://raw.githubusercontent.com/CrazyLadAlexx/MythicEnchants/main/version.txt
+  repository-url: https://github.com/CrazyLadAlexx/MythicEnchants

@@ -1,0 +1,17 @@
+name: MythicEnchants
+version: '${version}'
+main: me.alex.mythicenchants.MythicEnchants
+api-version: '26.3'
+author: Alex
+description: 'A range of enchants in multiple tiers with a server api'
+website: https://github.com/CrazyLadAlexx/MythicEnchants
+commands:
+  mythicenchants:
+    description: Manage MythicEnchants books and configuration
+    aliases: [me]
+    permission: mythicenchants.admin
+    usage: /mythicenchants <give|list|reload>
+permissions:
+  mythicenchants.admin:
+    description: Manage MythicEnchants
+    default: op

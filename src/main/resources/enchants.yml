@@ -1,0 +1,18 @@
+# Definitions provide books and applied item metadata, not gameplay effects.
+enchants:
+  'mythicenchants:example':
+    enabled: true
+    name: Example
+    tier: SIMPLE
+    max-level: 3
+    description:
+      - 'Example enchant for testing the framework.'
+      - 'Has no gameplay effect.'
+    materials:
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - COPPER_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
