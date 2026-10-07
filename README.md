@@ -6,7 +6,7 @@ A Paper **26.3** enchant framework running on **Java 25**. Version 1 includes bo
 
 ## Install and build
 
-Copy `build/libs/MythicEnchants-1.01.jar` into your Paper server's `plugins` directory and restart. The plugin creates `plugins/MythicEnchants/config.yml` and `enchants.yml` on first startup.
+Copy `build/libs/MythicEnchants-1.02.jar` into your Paper server's `plugins` directory and restart. The plugin creates `plugins/MythicEnchants/config.yml` and `enchants.yml` on first startup.
 
 Build with the included Gradle 9.4.0 wrapper and Java 25 installed:
 
@@ -18,7 +18,9 @@ On Linux/macOS: `./gradlew clean build`. The API dependency is pinned to Paper `
 
 ## Commands
 
-Permission: `mythicenchants.admin` (defaults to OP). Console can also administer the plugin.
+Only OPs can use these commands, even if a non-OP has been granted `mythicenchants.admin`. Console can still use the admin subcommands.
+
+`/mythicenchants` or `/me` without arguments opens an empty 4-row, 36-slot menu titled `&8MythicEnchantments`. Opening it plays `ENTITY_BAT_TAKEOFF` at volume `0.6` and pitch `1.0`. Items cannot be placed in the menu using clicks, shift-clicks, or drags.
 
 ```text
 /mythicenchants give <player> <enchant-id> <level> <success> <destroy>
@@ -32,7 +34,7 @@ Example:
 /mythicenchants give Alex mythicenchants:example 3 75 25
 ```
 
-`/me` is an alias. If another plugin or Minecraft claims `/me`, use `/mythicenchants` or `/mythicenchants:mythicenchants`. Book delivery requires an online player and enough storage space; a full inventory rejects delivery without dropping a book. Commands have tab completion.
+Player commands using `/me` are routed to MythicEnchants even when Minecraft or another plugin also registers that name. Book delivery requires an online player and enough storage space; a full inventory rejects delivery without dropping a book. Commands have tab completion.
 
 ## Books and applying enchants
 
@@ -135,7 +137,7 @@ Valid attempts fire cancellable `EnchantPreApplyEvent` before randomness or cons
 
 ## GitHub update notices
 
-`version.txt` at the repository root is the build's single version source, currently `1.01`. The updater checks this public URL asynchronously at startup and every six hours:
+`version.txt` at the repository root is the build's single version source, currently `1.02`. The updater checks this public URL asynchronously at startup and every six hours:
 
 ```text
 https://raw.githubusercontent.com/CrazyLadAlexx/MythicEnchants/main/version.txt
@@ -168,7 +170,7 @@ Java packages under `me.alex.mythicenchants`:
 
 - `api`, `api.event`: external contracts and events.
 - `enchant`, `book`, `application`: definitions, books, and application rules.
-- `listener`, `command`: player inventory interaction and administration.
+- `gui`, `listener`, `command`: the OP menu, player inventory interaction, and administration.
 - `config`, `update`, `util`: validated configuration, GitHub checks, text, and numeral helpers.
 
 Runtime resources live in `src/main/resources`. Test sources, smoke-server files, and test dependencies have been removed.

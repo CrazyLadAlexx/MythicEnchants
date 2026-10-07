@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.alex.mythicenchants.api.MythicEnchantsAPI;
+import me.alex.mythicenchants.gui.EnchantMenu;
 import me.alex.mythicenchants.util.Text;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MythicEnchantsCommand implements TabExecutor {
@@ -18,8 +20,12 @@ public final class MythicEnchantsCommand implements TabExecutor {
     private final Reload reload;
     public MythicEnchantsCommand(JavaPlugin plugin, MythicEnchantsAPI api, Reload reload) { this.plugin = plugin; this.api = api; this.reload = reload; }
     @Override public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("mythicenchants.admin")) { sender.sendMessage(Text.colour("&cYou do not have permission.")); return true; }
-        if (args.length == 0) { usage(sender, label); return true; }
+        if (!sender.isOp()) { sender.sendMessage(Text.colour("&cOnly OPs can use this command.")); return true; }
+        if (args.length == 0) {
+            if (sender instanceof Player player) EnchantMenu.open(player);
+            else sender.sendMessage(Text.colour("&cOnly players can open the MythicEnchants menu."));
+            return true;
+        }
         try {
             switch (args[0].toLowerCase(Locale.ROOT)) {
                 case "list" -> {
@@ -59,7 +65,7 @@ public final class MythicEnchantsCommand implements TabExecutor {
         sender.sendMessage(Text.colour("&e/" + label + " <list|reload>"));
     }
     @Override public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (!sender.hasPermission("mythicenchants.admin")) return List.of();
+        if (!sender.isOp()) return List.of();
         List<String> choices = List.of();
         if (args.length == 1) choices = List.of("give", "list", "reload");
         else if (args[0].equalsIgnoreCase("give")) {

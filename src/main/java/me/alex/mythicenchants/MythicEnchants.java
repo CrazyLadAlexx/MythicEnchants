@@ -13,6 +13,8 @@ import me.alex.mythicenchants.config.ConfigurationManager;
 import me.alex.mythicenchants.config.Settings;
 import me.alex.mythicenchants.enchant.EnchantRegistry;
 import me.alex.mythicenchants.listener.BookApplyListener;
+import me.alex.mythicenchants.listener.CommandAliasListener;
+import me.alex.mythicenchants.listener.EnchantMenuListener;
 import me.alex.mythicenchants.update.UpdateChecker;
 import me.alex.mythicenchants.util.Text;
 import org.bukkit.event.EventHandler;
@@ -42,6 +44,8 @@ public final class MythicEnchants extends JavaPlugin implements Listener {
             var registered = Objects.requireNonNull(getCommand("mythicenchants"));
             registered.setExecutor(command);
             registered.setTabCompleter(command);
+            getServer().getPluginManager().registerEvents(new CommandAliasListener(registered), this);
+            getServer().getPluginManager().registerEvents(new EnchantMenuListener(), this);
             getServer().getPluginManager().registerEvents(new BookApplyListener(this, api, books), this);
             getServer().getPluginManager().registerEvents(this, this);
             updates = new UpdateChecker(this);
